@@ -24,3 +24,6 @@ real time ecommerce backend application developed using nodeJS and mongoDB
 - product router: get products , get product details
 - cart router: add to cart , remove from cart , get cart , clear cart
 - order router: add order , get order details , get all orders , delete order , delete my orders
+
+# npm install
+# npx nodemon server.js
