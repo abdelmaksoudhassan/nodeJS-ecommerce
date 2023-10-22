@@ -35,6 +35,12 @@ app.use(categoryRouter)
 app.use(productRouter)
 app.use(cartRouter)
 app.use(orderRouter)
+app.use('*',(req,res,next)=>{
+    res.status(404).send({
+        message: 'this route not found'
+    })
+    next()
+})
 
 io.on('connection',(socket)=>{
     const {id} = socket
