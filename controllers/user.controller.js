@@ -37,7 +37,12 @@ const login = async (req,res,next) =>{
             })
         }
         const user = users[0]
-        await user.checkPassword(password)
+        const equaled = await user.checkPassword(password)
+        if(!equaled){
+            return res.status(401).json({
+                message: 'wrong password'
+            })
+        }
         const token = await user.generateToken()
         res.status(200).json({user,token})
         next()
