@@ -2,7 +2,7 @@ const Admin = require('../database/models/admin.model')
 
 const authAdmin = async(req,res,next) => {
     try{
-        const token = req.header('Authorization')
+        const token = req.header('Token')
         if(! token){
             return res.status(401).send({
                 message: 'unauthorized request'
