@@ -1,7 +1,6 @@
 const express = require('express')
 const http = require('http')
 const bodyParser = require('body-parser')
-const cors=require('cors');
 
 const userRouter = require('./routers/user.router')
 const adminRouter = require('./routers/admin.router')
@@ -19,21 +18,13 @@ const io = require('./socket-io/socket').init(server)
 
 const port = process.env.PORT || 3000
 
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-//     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     res.setHeader('Access-Control-Allow-Credentials', true);
-//     next();
-// });
-const corsOptions ={
-   origin:'http://localhost:5173', 
-   credentials:true,            //access-control-allow-credentials:true
-   optionSuccessStatus:200,
-}
-
-app.use(cors(corsOptions)) // Use this after the variable declaration
-
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
