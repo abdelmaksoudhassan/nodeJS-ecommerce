@@ -40,7 +40,7 @@ const logout = (req,res,next) =>{
 }
 
 const autoLogin = async (req,res,next) =>{
-    const token = req.header('token')
+    const token = req.header('Token')
     try{
         const admin = await Admin.findByToken(token)
         res.status(200).json(admin)
