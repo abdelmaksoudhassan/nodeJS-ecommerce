@@ -39,7 +39,7 @@ const login = async (req,res,next) =>{
         const user = users[0]
         await user.checkPassword(password)
         const token = await user.generateToken()
-        res.setHeader('token',token).status(200).json(user)
+        res.setHeader('Authorization',token).status(200).json(user)
         next()
     }
     catch(e){
