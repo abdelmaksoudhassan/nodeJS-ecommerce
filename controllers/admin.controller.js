@@ -16,7 +16,7 @@ const login = async (req,res,next) =>{
         const admin = admins[0]
         await admin.checkPassword(password)
         const token = await admin.generateToken()
-        res.setHeader('Token',token).status(200).json(admin)
+        res.status(200).json({...admin,token))
         next()
     }
     catch(err){
