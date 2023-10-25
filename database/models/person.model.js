@@ -73,13 +73,7 @@ personSchema.pre('save',async function(next){
     next()
 })
 personSchema.methods.checkPassword = function(password){
-    return new Promise(async (resolve,reject)=>{
-        const same = await bcrypt.compare(password,this.password)
-        if(!same){
-            return reject({message: 'wrong password'})
-        }
-        return resolve()
-    })
+    return await bcrypt.compare(password,this.password)
 }
 personSchema.methods.generateToken = async function(){
     const token = jwt.sign({id:this._id},secretKey)
