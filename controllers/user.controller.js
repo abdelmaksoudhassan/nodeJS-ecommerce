@@ -39,7 +39,7 @@ const login = async (req,res,next) =>{
         const user = users[0]
         await user.checkPassword(password)
         const token = await user.generateToken()
-        res.setHeader('Authorization',token).status(200).json(user)
+        res.setHeader('Token',token).status(200).json(user)
         next()
     }
     catch(e){
@@ -63,7 +63,7 @@ const logOut = (req,res,next) =>{
 }
 
 const autoLogin = async (req,res,next) =>{
-    const token = req.header('token')
+    const token = req.header('Token')
     try{
         const user = await User.findByToken(token)
         res.json(user)
