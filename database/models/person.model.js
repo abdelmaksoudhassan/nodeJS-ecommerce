@@ -72,7 +72,7 @@ personSchema.pre('save',async function(next){
     }
     next()
 })
-personSchema.methods.checkPassword = function(password){
+personSchema.methods.checkPassword = async function(password){
     return await bcrypt.compare(password,this.password)
 }
 personSchema.methods.generateToken = async function(){
