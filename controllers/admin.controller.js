@@ -9,14 +9,19 @@ const login = async (req,res,next) =>{
     try{
         const admins = await Admin.find({email})
         if(_.isEmpty(admins)){
-            return res.status(404).send({
+            return res.status(404).json({
                 message: `email ${email} not found`
             })
         }
         const admin = admins[0]
-        await admin.checkPassword(password)
+        const equaled = await admin.checkPassword(password)
+        if(!equaled){
+            return res.status(401).json({
+                message: 'wrong password'
+            })
+        }
         const token = await admin.generateToken()
-        res.setHeader('Token','dgf').status(200).json({admin,token})
+        res.status(200).json({admin,token})
         next()
     }
     catch(err){
