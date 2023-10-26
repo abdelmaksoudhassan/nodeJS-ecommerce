@@ -66,7 +66,9 @@ const addAdmin = async (req,res,next) => {
             })
         }
         const admin = await Admin.create({email,password})
-        res.status(201).json(admin)
+        res.status(201).json({
+            message: `admin with email ${email} added succssfully`
+        })
         next()
     }
     catch(e){
