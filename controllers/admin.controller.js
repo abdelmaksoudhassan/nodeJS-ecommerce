@@ -157,9 +157,9 @@ const changePhoto = (req,res,next) =>{
 }
 
 const deleteAdmin = async(req,res,next)=>{
-    const email = req.params.email
+    const id = req.params.id
     try{
-        const deleted = await Admin.deleteOne({email})
+        const deleted = await Admin.deleteOne({_id:id})
         if(deleted.deletedCount == 0){
             return res.status(404).json({
                 message: `admin with id ${id} not found`
