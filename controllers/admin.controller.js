@@ -166,11 +166,10 @@ const deleteAdmin = async(req,res,next)=>{
             })
         }
         res.status(200).send({
-            message: `${email} account deleted`
+            message: `admin with id ${_id} deleted`
         })
         next()
     }catch(e){
-        console.log(e)
         res.status(500).json(e)
     }
 }
