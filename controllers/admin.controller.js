@@ -157,9 +157,9 @@ const changePhoto = (req,res,next) =>{
 }
 
 const deleteAdmin = async(req,res,next)=>{
-    const id = req.params.id
+    const _id = req.params.id
     try{
-        const deleted = await Admin.deleteOne({_id:id})
+        const deleted = await Admin.deleteOne({_id})
         if(deleted.deletedCount == 0){
             return res.status(404).json({
                 message: `admin with id ${id} not found`
@@ -170,6 +170,7 @@ const deleteAdmin = async(req,res,next)=>{
         })
         next()
     }catch(e){
+        console.log(e)
         res.status(500).json(e)
     }
 }
