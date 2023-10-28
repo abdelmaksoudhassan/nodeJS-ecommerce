@@ -26,6 +26,7 @@ const addProduct = (req,res,next) =>{
             io.getIO().emit('addProduct',doc)
             next()
         }).catch(e=>{
+            console.log(e)
             images.forEach(path=>deleteImage(path))
             if(e.errors){
                 return res.status(406).json(handValidationError(e))
