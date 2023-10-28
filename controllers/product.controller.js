@@ -8,6 +8,7 @@ const addProduct = (req,res,next) =>{
     const publisherId = req.admin._id
     uploadProductImages(req,res,function(err){
         if (err) {
+            console.log(err)
             return res.status(406).send({
                 message: 'file validation error',
                 ...err
@@ -26,7 +27,6 @@ const addProduct = (req,res,next) =>{
             io.getIO().emit('addProduct',doc)
             next()
         }).catch(e=>{
-            console.log(e)
             images.forEach(path=>deleteImage(path))
             if(e.errors){
                 return res.status(406).json(handValidationError(e))
