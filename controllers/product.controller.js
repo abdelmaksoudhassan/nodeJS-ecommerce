@@ -4,12 +4,10 @@ const {deleteImage,handValidationError,uploadProductImages} = require('../functi
 const io = require('../socket-io/socket')
 
 const addProduct = (req,res,next) =>{
-    console.log(req.body,req.formData)
     const {title,price,description,categoryId,quantity} = req.body
     const publisherId = req.admin._id
     uploadProductImages(req,res,function(err){
         if (err) {
-            console.log(err)
             return res.status(406).send({
                 message: 'file validation error',
                 ...err
