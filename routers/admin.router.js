@@ -12,6 +12,6 @@ adminRouter.get('/get-admins',authAdmin,adminController.getAdmins)
 adminRouter.delete('/delete-admin/:id',authAdmin,adminController.deleteAdmin)
 adminRouter.patch('/change-password',authAdmin,adminController.changePassword)
 adminRouter.patch('/change-name',authAdmin,adminController.changeName)
-adminRouter.patch('/change-photo',authAdmin,adminController.changePhoto)
+adminRouter.post('/change-photo',authAdmin,adminController.changePhoto)
 
 module.exports = adminRouter
