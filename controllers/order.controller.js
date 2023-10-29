@@ -26,7 +26,7 @@ const getOrders = async (req,res,next) =>{
     const limit = +req.query.count
     try{
         const total = await Order.count()
-        const orders = await Order.find().populate('products.productId').limit(limit).skip((page-1)*limit)
+        const orders = await Order.find().populate('userId').populate('products.productId').limit(limit).skip((page-1)*limit)
         res.json({
             orders,
             currentPage:page,
