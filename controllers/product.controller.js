@@ -88,7 +88,6 @@ const editProduct = (req,res,next)=>{
         })
     }
     const {_id} = req.admin
-    const {title,price,quantity,categoryId,description} = req.body
     uploadProductImages(req,res,async function(err){
         if (err) {
             return res.status(406).send({
@@ -101,6 +100,7 @@ const editProduct = (req,res,next)=>{
             req.files.forEach(img=>newImages.push(img.path))
         }
         try{
+            const {title,price,quantity,categoryId,description} = req.body
             const updated = await Product.findOneAndUpdate({ _id:id, publisherId: _id},{
                 $set:{ title, price, quantity, categoryId, description },
                 $addToSet:{ images:{ $each : newImages } }
