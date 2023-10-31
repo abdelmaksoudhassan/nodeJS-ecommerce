@@ -9,7 +9,7 @@ const signUp = async (req,res,next) => {
     try{
         let users = await Person.find({email})
         if(! _.isEmpty(users)){
-            return res.status(404).send({
+            return res.status(406).send({
                 message: `${email} already used`
             })
         }
