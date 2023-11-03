@@ -15,7 +15,7 @@ const signUp = async (req,res,next) => {
         }
         const user = await User.create({email,password})
         res.status(201).json({
-            message: 'new user registered'
+            message: 'registered successfully'
         })
         next()
     }
