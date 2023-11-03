@@ -44,22 +44,10 @@ const getOrders = async (req,res,next) =>{
 }
 
 const myOrders = async (req,res,next) =>{
-    const page = +req.query.page
-    const limit = +req.query.count
     const {_id} = req.user
     try{
-        const total = await Order.count({userId:_id})
-        const orders = await Order.find({userId:_id}).populate('products.productId').limit(limit).skip((page-1)*limit)
-        res.json({
-            orders,
-            currentPage:page,
-            hasNextPage: limit*page<total,
-            hasPreviousPage: page>1,
-            nextPage: ((total/(limit*page) >1) ? page+1 : null),
-            previousPage: (page>1 ? page-1 : null ),
-            lastPage:Math.ceil(total/limit),
-            total
-        })
+        const orders = await Order.find({userId:_id}).populate('products.productId')
+        res.send(orders)
         next()
     }catch(err){
         res.status(500).json(err)
