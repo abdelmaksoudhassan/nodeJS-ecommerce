@@ -129,7 +129,7 @@ const getAdminProducts = async (req,res,next) =>{
     const publisherId = req.admin._id
     try{
         const total = await Product.count({publisherId})
-        const products = await Product.find({publisherId}).populate('categoryId').limit(limit).skip((page-1)*limit)
+        const products = await Product.find({publisherId}).sort({createdAt: -1}).populate('categoryId').limit(limit).skip((page-1)*limit)
         res.json({
             products,
             currentPage:page,
@@ -151,7 +151,7 @@ const getAllProducts = async (req,res,next)=>{
     const limit = + req.query.count
     try{
         const total = await Product.count()
-        const products = await Product.find().populate('categoryId').populate('publisherId').limit(limit).skip((page-1)*limit)
+        const products = await Product.find().sort({createdAt: -1}).populate('categoryId').populate('publisherId').limit(limit).skip((page-1)*limit)
         res.json({
             products,
             currentPage:page,
