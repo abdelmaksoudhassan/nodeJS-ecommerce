@@ -46,7 +46,7 @@ const getOrders = async (req,res,next) =>{
 const myOrders = async (req,res,next) =>{
     const {_id} = req.user
     try{
-        const orders = await Order.find({userId:_id}).populate('products.productId')
+        const orders = await Order.find({userId:_id}).sort({createdAt: -1}).populate('products.productId')
         res.send(orders)
         next()
     }catch(err){
