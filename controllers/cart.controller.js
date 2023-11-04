@@ -17,8 +17,8 @@ const addToCart = async (req,res,next) =>{
             })
         }
         const userData = await user.addToCart(product)
-        const cartData = await userData.cartDetails(userData.cart)
-        res.json(cartData)
+        const {cart} = userData
+        res.json(cart)
         next()
     }catch(err){
         return res.status(500).send(err)
@@ -41,10 +41,11 @@ const decreaseQuantity = async (req,res,next) =>{
             })
         }
         const userData = await user.decreaseQuantity(product)
-        const cartData = await userData.cartDetails()
-        res.json(cartData)
+        const {cart} = userData
+        res.json(cart)
         next()
     }catch(err){
+        console.log(err)
         res.status(500).send(err)
     }
 }

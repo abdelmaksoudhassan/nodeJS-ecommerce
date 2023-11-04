@@ -30,7 +30,7 @@ const signUp = async (req,res,next) => {
 const login = async (req,res,next) =>{
     const {email,password} = req.body
     try{
-        const users = await User.find({email})
+        const users = await User.find({email}).populate('cart.productId')
         if(_.isEmpty(users)){
             return res.status(404).send({
                 message: `email ${email} not found`
