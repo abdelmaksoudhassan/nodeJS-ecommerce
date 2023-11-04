@@ -17,7 +17,6 @@ const makeOrder = async (req,res,next)=>{
         io.getIO().emit('newOrder',order)
         next()
     }catch(e){
-        console.log(e)
         res.status(500).json(e)
     }
 }
