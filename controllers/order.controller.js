@@ -11,7 +11,7 @@ const makeOrder = async (req,res,next)=>{
         })
     }
     try{
-        const order = await Order.addOrder(user)
+        const order = await Order.addOrder(user).populate('products.productId')
         res.json(order)
         io.getIO().emit('newOrder',order)
         next()
