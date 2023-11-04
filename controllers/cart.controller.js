@@ -59,8 +59,8 @@ const removeFromCart = async (req,res,next) =>{
     }
     try{
         const userData = await user.removeFromCart(productId)
-        const cartData = await userData.cartDetails()
-        res.json(cartData)
+        const {cart} = userData
+        res.json(cart)
         next()
     }catch(err){
         res.status(500).send(err)
