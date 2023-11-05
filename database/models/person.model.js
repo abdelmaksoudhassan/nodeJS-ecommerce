@@ -81,7 +81,7 @@ personSchema.methods.generateToken = async function(){
 }
 personSchema.statics.findByToken = async function(token){
     const data = await jwt.verify(token,secretKey)
-    const person = await this.findById(data.id).populate('cart.productId')
+    const person = await this.findById(data.id)
     if(person.persontype == 'Admin'){
         return person
     }
