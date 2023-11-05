@@ -52,8 +52,7 @@ const autoLogin = async (req,res,next) =>{
         next()
     }
     catch(err){
-        console.log(err)
-        res.status(500).send(err)
+        res.status(401).send(err)
     }
 }
 
