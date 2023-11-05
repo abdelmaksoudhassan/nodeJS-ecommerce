@@ -82,7 +82,11 @@ personSchema.methods.generateToken = async function(){
 personSchema.statics.findByToken = async function(token){
     const data = await jwt.verify(token,secretKey)
     const person = await this.findById(data.id).populate('cart.productId')
-    return person
+    if(person.persontype == 'Admin'){
+        return person
+    }
+    const user = person.populate('cart.productId')
+    return user
 }
 var Person = mongoose.model('Person',personSchema)
 module.exports = Person
