@@ -73,7 +73,7 @@ const deleteCategory= async (req,res,next)=>{
             })
         }
         res.json({ 
-            message: `category with id ${id} deleted`
+            message: `category deleted`
         })
         io.getIO().emit('deleteCategory',id)
         next()
