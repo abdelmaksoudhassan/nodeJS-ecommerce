@@ -10,6 +10,7 @@ const lettersNumbersSpaces_regEx = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/
 const categorySchema = new mongoose.Schema({
     title:{
         required:[true,'this field is required'],
+        unique: true,
         type:String,
         minlength: [minNameLength,`this field must be minimum ${minNameLength}`],
         maxlength: [maxNameLength,`this field must be maximum ${maxNameLength}`],
@@ -32,5 +33,9 @@ categorySchema.pre('deleteOne',{ query: true, document: false },async function(n
     await Product.deleteMany({categoryId: id})
     next()
 })
+categorySchema.pre('findOneAndUpdate', function(next) {
+  this.options.runValidators = true;
+  next();
+});
 const Category = mongoose.model('Category',categorySchema)
 module.exports = Category
