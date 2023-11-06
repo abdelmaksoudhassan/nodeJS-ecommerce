@@ -67,7 +67,9 @@ const removeOrder = async (req,res,next)=>{
                 message: `order with id ${id} not found`
             })
         }
-        res.json(deleted)
+        res.json({
+            message: 'order deleted'
+        })
         io.getIO().emit('removeOrder',id)
         next()
     }catch(err){
