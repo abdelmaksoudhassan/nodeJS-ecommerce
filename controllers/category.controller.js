@@ -39,7 +39,7 @@ const editCategory= async (req,res,next)=>{
             { _id: id },{
                 $set: { title }
             },{
-                runValidators: true
+                new: true
             }
         )
         if(! updated){
