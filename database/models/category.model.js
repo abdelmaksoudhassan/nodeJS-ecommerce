@@ -32,9 +32,5 @@ categorySchema.pre('deleteOne',{ query: true, document: false },async function(n
     await Product.deleteMany({categoryId: id})
     next()
 })
-categorySchema.pre('findOneAndUpdate',function(next){
-    this.options.runValidators = true;
-    next();
-})
 const Category = mongoose.model('Category',categorySchema)
 module.exports = Category
