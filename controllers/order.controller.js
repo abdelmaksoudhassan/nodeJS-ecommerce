@@ -83,6 +83,7 @@ const removeAllOrders = (req,res,next) =>{
             message: 'all orders removed'
         })
         io.getIO().emit('removeAllOrders')
+        next()
     }).catch(err=>{
         res.status(500).json(err)
     })
