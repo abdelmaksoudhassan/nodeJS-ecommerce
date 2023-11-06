@@ -39,9 +39,7 @@ const editCategory= async (req,res,next)=>{
             { _id: id },{
                 $set: { title }
             },{
-                new: true,
-                runValidators: true,
-                context: 'query'
+                runValidators: true
             }
         )
         if(! updated){
@@ -49,7 +47,9 @@ const editCategory= async (req,res,next)=>{
                 message: `category with id ${id} not found`
             })
         }
-        res.json(updated)
+        res.json({
+            message: 'category updated'
+        })
         io.getIO().emit('editCategory',updated)
         next()
     }catch(err){
