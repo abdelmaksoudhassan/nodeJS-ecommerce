@@ -26,11 +26,11 @@ const orderSchema = mongoose.Schema({
 })
 orderSchema.statics.addOrder =  async function(user){
     const products = []
-    const productsId = user.cart.map(item=>{return item.productId}) //get all products in cart
+    const productsId = user.cart.map(item=>{return item.productId._id}) //get all products in cart
     await Product.find({_id:{$in:productsId}}).cursor().eachAsync(async(product)=>{ //loop all products in cart
         // get quantity for all products in cart
         const neededQuantity = user.cart.find(item=>{
-            return item.productId.toString() === product._id.toString()
+            return item.productId._id.toString() === product._id.toString()
         }).quantity
         //if it last piece in store remove it
         if(neededQuantity == product.quantity){
