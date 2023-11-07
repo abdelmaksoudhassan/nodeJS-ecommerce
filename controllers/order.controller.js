@@ -5,7 +5,6 @@ const io = require('../socket-io/socket')
 
 const makeOrder = async (req,res,next)=>{
     const user = req.user
-    console.log(user)
     if(_.isEmpty(user.cart)){
         return res.status(400).json({
             message: 'empty cart'
