@@ -33,11 +33,12 @@ const port = process.env.PORT || 3000
 //     next();
 // });
 app.use(cors({
-    origin: 'http://localhost:5173',
-    methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
-    credentials: true,
-    allowedHeaders: ['Content-Type, Authorization, User-Token, Token']
-}));
+        origin: 'http://localhost:5173',
+        methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
+        credentials: true,
+        allowedHeaders: ['Content-Type, Authorization, User-Token, Token']
+    })
+);
 app.use('/',express.static(__dirname))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
