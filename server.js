@@ -21,7 +21,7 @@ const io = require('./socket-io/socket').init(server,{
       methods: ["GET", "POST"],
       credentials: true
     }
-  })
+})
 
 const port = process.env.PORT || 3000
 
