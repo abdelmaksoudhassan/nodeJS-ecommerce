@@ -58,16 +58,6 @@ io.on('connection',(socket)=>{
     const {id} = socket
     console.log(`new user connected via socket with id ${id}`)
 
-    socket.on('join', (params, callback) => {
-    if (!isRealString(params.email) || !isRealString(params.room)) {
-      return callback('internal error: email or room name not passed as argument');
-    }
-
-    socket.join(params.room);
-    io.to(params.room).emit('newAdminJoined', params.email);
-    callback();
-  });
-
     socket.on('disconnect',(msg)=>{
         console.log(`user with socket id ${id} ${msg}`)
     })
