@@ -1,6 +1,7 @@
 const express = require('express')
 const http = require('http')
 const bodyParser = require('body-parser')
+var cors = require('cors');
 
 const userRouter = require('./routers/user.router')
 const adminRouter = require('./routers/admin.router')
@@ -14,17 +15,24 @@ require('dotenv').config({ path:'./vars.env' })
 
 const app = express()
 const server = http.createServer(app)
-const io = require('./socket-io/socket').init(server)
+const io = require('./socket-io/socket').init(server,{
+    cors: {
+      origin: 'http://localhost:5173',
+      methods: ["GET", "POST"],
+      credentials: true
+    }
+  })
 
 const port = process.env.PORT || 3000
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, User-Token, Token');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+//     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, User-Token, Token');
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//     next();
+// });
+app.use(cors());
 app.use('/',express.static(__dirname))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +45,7 @@ app.use(cartRouter)
 app.use(orderRouter)
 app.get('/',(req,res,next)=>{
     res.send('welcome from server')
+    next()
 })
 
 io.on('connection',(socket)=>{
