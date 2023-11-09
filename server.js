@@ -58,6 +58,8 @@ io.on('connection',(socket)=>{
     const {id} = socket
     console.log(`new user connected via socket with id ${id}`)
 
+    socket.broadcast.emit('newAdminJoined');
+
     socket.on('disconnect',(msg)=>{
         console.log(`user with socket id ${id} ${msg}`)
     })
