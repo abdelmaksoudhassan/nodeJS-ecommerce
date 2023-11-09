@@ -11,7 +11,7 @@ const addCategory= async (req,res,next)=>{
         if(_.isEmpty(categories)){
             const category = await Category.create({title})
             res.status(201).json(category)
-            io.getIO().emit('addCategory',category)
+            io.getIO().broadcast.emit('addCategory',category)
             next()
         }else{
             return res.status(406).json({
@@ -50,7 +50,7 @@ const editCategory= async (req,res,next)=>{
         res.json({
             message: 'category updated'
         })
-        io.getIO().emit('editCategory',updated)
+        io.getIO().broadcast.emit('editCategory',updated)
         next()
     }catch(err){
         if(err.errors){
@@ -77,7 +77,7 @@ const deleteCategory= async (req,res,next)=>{
         res.json({ 
             message: `category deleted`
         })
-        io.getIO().emit('deleteCategory',id)
+        io.getIO().broadcast.emit('deleteCategory',id)
         next()
     }catch(err){
         res.status(500).send(err)
