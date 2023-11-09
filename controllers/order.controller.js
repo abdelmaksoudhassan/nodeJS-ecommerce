@@ -13,7 +13,7 @@ const makeOrder = async (req,res,next)=>{
     try{
         const order = await Order.addOrder(user)
         res.json(order)
-        io.getIO().broadcast.emit('newOrder',order)
+        io.getIO().emit('newOrder',order)
         next()
     }catch(e){
         res.status(500).json(e)
@@ -70,7 +70,7 @@ const removeOrder = async (req,res,next)=>{
         res.json({
             message: 'order deleted'
         })
-        io.getIO().broadcast.emit('removeOrder',id)
+        io.getIO().emit('removeOrder',id)
         next()
     }catch(err){
         res.status(500).json(err)
