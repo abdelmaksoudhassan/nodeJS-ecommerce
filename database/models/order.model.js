@@ -42,11 +42,11 @@ orderSchema.statics.addOrder =  async function(user){
             await product.save()
             io.getIO().emit('updateProductQuantity',{id:product._id,newQuantity:product.quantity})
         }
-        products.push({productId:product._id,quantity:neededQuantity}) //add product to order
+        products.push({productId:product,quantity:neededQuantity}) //add product to order
     })
     const newOrder = new Order({ //create order
         products,
-        userId:user._id
+        userId:user
     })
     user.cart = []
     await user.save()
