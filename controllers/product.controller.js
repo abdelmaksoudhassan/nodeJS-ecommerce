@@ -23,7 +23,7 @@ const addProduct = (req,res,next) =>{
         const product = new Product({title,price,description,categoryId,quantity,images,publisherId})
         product.save().then(doc=>{
             res.json(doc)
-            io.getIO().broadcast.emit('addProduct',doc)
+            io.getIO().emit('addProduct',doc)
             next()
         }).catch(e=>{
             images.forEach(path=>deleteImage(path))
@@ -74,7 +74,7 @@ const deleteProduct = async (req,res,next) => {
         res.json({
             message: `product deleted`
         })
-        io.getIO().broadcast.emit('deleteProduct',id)
+        io.getIO().emit('deleteProduct',id)
         next()
     }catch(err){
         return res.status(500).json(err)
@@ -111,7 +111,7 @@ const editProduct = (req,res,next)=>{
                 })
             }
             res.json(updated)
-            io.getIO().broadcast.emit('editProduct',updated)
+            io.getIO().emit('editProduct',updated)
             next()
         }catch(err){
             newImages.forEach(path=>deleteImage(path))
