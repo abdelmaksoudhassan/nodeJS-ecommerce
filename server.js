@@ -17,8 +17,8 @@ const app = express()
 const server = http.createServer(app)
 const io = require('./socket-io/socket').init(server,{
     cors: {
-      origin: 'http://localhost:5173',
-      methods: ["GET", "POST"],
+      origin: ['http://localhost:5173','http://localhost:5174'],
+      methods: ["GET", "POST", "PATCH", "DELETE"],
       credentials: true
     }
 })
@@ -33,7 +33,7 @@ const port = process.env.PORT || 3000
 //     next();
 // });
 app.use(cors({
-        origin: 'http://localhost:5173',
+        origin: ['http://localhost:5173','http://localhost:5174'],
         methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
         credentials: true,
         allowedHeaders: ['Content-Type, Authorization, User-Token, Token']
