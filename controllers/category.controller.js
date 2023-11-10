@@ -2,7 +2,6 @@ const Category = require('../database/models/category.model')
 const {handValidationError} = require('../functions/functions')
 const _ = require('lodash')
 const {isValidObjectId} = require('mongoose')
-const io = require('../socket-io/socket')
 
 const addCategory= async (req,res,next)=>{
     const {title} = req.body
@@ -11,7 +10,7 @@ const addCategory= async (req,res,next)=>{
         if(_.isEmpty(categories)){
             const category = await Category.create({title})
             res.status(201).json(category)
-            io.getIO().emit('addCategory',category)
+            req.app.get('socket').emit('addCategory',category)
             next()
         }else{
             return res.status(406).json({
@@ -50,7 +49,7 @@ const editCategory= async (req,res,next)=>{
         res.json({
             message: 'category updated'
         })
-        io.getIO().emit('editCategory',updated)
+        req.app.get('socket').emit('editCategory',updated)
         next()
     }catch(err){
         if(err.errors){
@@ -77,7 +76,7 @@ const deleteCategory= async (req,res,next)=>{
         res.json({ 
             message: `category deleted`
         })
-        io.getIO().emit('deleteCategory',id)
+        req.app.get('socket').emit('deleteCategory',id)
         next()
     }catch(err){
         res.status(500).send(err)
