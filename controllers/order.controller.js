@@ -69,7 +69,6 @@ const removeOrder = async (req,res,next)=>{
         res.json({
             message: 'order deleted'
         })
-        req.app.get('socket').emit('removeOrder',deleted)
         next()
     }catch(err){
         res.status(500).json(err)
@@ -77,15 +76,14 @@ const removeOrder = async (req,res,next)=>{
 }
 
 const removeAllOrders = (req,res,next) =>{
-    // Order.deleteMany().then(()=>{
-    //     res.json({
-    //         message: 'all orders removed'
-    //     })
-        req.app.get('socket').emit('removeAllOrders')
+    Order.deleteMany().then(()=>{
+        res.json({
+            message: 'all orders removed'
+        })
         next()
-    // }).catch(err=>{
-    //     res.status(500).json(err)
-    // })
+    }).catch(err=>{
+        res.status(500).json(err)
+    })
 }
 
 module.exports = {
