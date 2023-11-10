@@ -1,7 +1,6 @@
 const Product = require('../database/models/product.model')
 const {isValidObjectId} = require('mongoose')
 const {deleteImage,handValidationError,uploadProductImages} = require('../functions/functions')
-const io = require('../socket-io/socket')
 
 const addProduct = (req,res,next) =>{
     const publisherId = req.admin._id
@@ -23,7 +22,7 @@ const addProduct = (req,res,next) =>{
         const product = new Product({title,price,description,categoryId,quantity,images,publisherId})
         product.save().then(doc=>{
             res.json(doc)
-            io.getIO().emit('addProduct',doc)
+            req.app.get('socket').emit('addProduct',doc)
             next()
         }).catch(e=>{
             images.forEach(path=>deleteImage(path))
@@ -74,7 +73,7 @@ const deleteProduct = async (req,res,next) => {
         res.json({
             message: `product deleted`
         })
-        io.getIO().emit('deleteProduct',id)
+        req.app.get('socket').emit('deleteProduct',id)
         next()
     }catch(err){
         return res.status(500).json(err)
@@ -111,7 +110,7 @@ const editProduct = (req,res,next)=>{
                 })
             }
             res.json(updated)
-            io.getIO().emit('editProduct',updated)
+            req.app.get('socket').emit('editProduct',updated)
             next()
         }catch(err){
             newImages.forEach(path=>deleteImage(path))
