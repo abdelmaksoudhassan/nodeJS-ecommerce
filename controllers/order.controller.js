@@ -69,7 +69,7 @@ const removeOrder = async (req,res,next)=>{
         res.json({
             message: 'order deleted'
         })
-        req.app.get('socket').emit('removeOrder',id)
+        req.app.get('socket').emit('removeOrder',deleted)
         next()
     }catch(err){
         res.status(500).json(err)
