@@ -77,15 +77,15 @@ const removeOrder = async (req,res,next)=>{
 }
 
 const removeAllOrders = (req,res,next) =>{
-    Order.deleteMany().then(()=>{
-        res.json({
-            message: 'all orders removed'
-        })
+    // Order.deleteMany().then(()=>{
+    //     res.json({
+    //         message: 'all orders removed'
+    //     })
         req.app.get('socket').emit('removeAllOrders')
         next()
-    }).catch(err=>{
-        res.status(500).json(err)
-    })
+    // }).catch(err=>{
+    //     res.status(500).json(err)
+    // })
 }
 
 module.exports = {
