@@ -1,7 +1,6 @@
 const _ = require('lodash')
 const Order = require('../database/models/order.model')
 const {isValidObjectId} = require('mongoose')
-const io = require('../socket-io/socket')
 
 const makeOrder = async (req,res,next)=>{
     const user = req.user
