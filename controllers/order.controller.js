@@ -1,6 +1,7 @@
 const _ = require('lodash')
 const Order = require('../database/models/order.model')
 const {isValidObjectId} = require('mongoose')
+const io = require('../socket-io/socket')
 
 const makeOrder = async (req,res,next)=>{
     const user = req.user
@@ -12,7 +13,7 @@ const makeOrder = async (req,res,next)=>{
     try{
         const order = await Order.addOrder(user)
         res.json(order)
-        req.app.get('socket').emit('newOrder',order)
+        io.getIO().emit('newOrder',order)
         next()
     }catch(e){
         res.status(500).json(e)
@@ -69,6 +70,7 @@ const removeOrder = async (req,res,next)=>{
         res.json({
             message: 'order deleted'
         })
+        io.getIO().emit('removeOrder',id)
         next()
     }catch(err){
         res.status(500).json(err)
@@ -80,6 +82,7 @@ const removeAllOrders = (req,res,next) =>{
         res.json({
             message: 'all orders removed'
         })
+        io.getIO().emit('removeAllOrders')
         next()
     }).catch(err=>{
         res.status(500).json(err)
