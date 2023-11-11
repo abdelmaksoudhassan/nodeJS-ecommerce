@@ -61,7 +61,6 @@ io.on('connection',(socket)=>{
     socket.on('join',(params)=>{
         const {room} = params
         socket.join(room);
-        app.set('socket',socket)
         socket.broadcast.to(room).emit('newAdminJoined');
     })
 
