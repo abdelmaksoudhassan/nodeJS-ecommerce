@@ -5,7 +5,7 @@ const io = require('../socket-io/socket')
 
 const addProduct = (req,res,next) =>{
     const publisherId = req.admin._id
-    uploadProductImages(req,res,function(err){
+    uploadProductImages(req,res,async function(err){
         if (err) {
             return res.status(406).send({
                 message: 'file validation error',
@@ -19,19 +19,22 @@ const addProduct = (req,res,next) =>{
         }
         const images = [] 
         req.files.forEach(img=>images.push(img.path))
-        const {title,price,description,categoryId,quantity} = req.body
-        const product = new Product({title,price,description,categoryId,quantity,images,publisherId})
-        product.save().then(doc=>{
-            res.json(doc)
-            io.getIO().emit('addProduct',doc)
+        try{
+            const {title,price,description,categoryId,quantity} = req.body
+            const product = new Product({title,price,description,categoryId,quantity,images,publisherId})
+            const doc = await product.save()
+            const document = await doc.populate('categoryId')
+            console.log(document)
+            res.json(document)
+            io.getIO().emit('addProduct',document)
             next()
-        }).catch(e=>{
+        } catch(e){
             images.forEach(path=>deleteImage(path))
             if(e.errors){
                 return res.status(406).json(handValidationError(e))
             }
             res.status(500).send(e)
-        })
+        }
     })
 }
 
