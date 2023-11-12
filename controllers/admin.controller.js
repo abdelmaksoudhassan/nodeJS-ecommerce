@@ -3,6 +3,7 @@ const Person = require('../database/models/person.model')
 const {uploadAdminPhoto,deleteImage,handValidationError} = require('../functions/functions')
 const _ = require('lodash')
 const {compare} = require('bcryptjs')
+const io = require('../socket-io/socket')
 
 const login = async (req,res,next) =>{
     const {email,password} = req.body
@@ -66,6 +67,7 @@ const addAdmin = async (req,res,next) => {
             })
         }
         const admin = await Admin.create({email,password})
+        io.getIO().emit('addAdmin',admin)
         res.status(201).json({
             message: `admin with email ${email} added succssfully`
         })
@@ -165,6 +167,7 @@ const deleteAdmin = async(req,res,next)=>{
                 message: `admin with id ${id} not found`
             })
         }
+        io.getIO().emit('deleteAdmin',_id)
         res.status(200).send({
             message: `admin deleted`
         })
