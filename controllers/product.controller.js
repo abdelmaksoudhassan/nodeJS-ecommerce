@@ -24,7 +24,6 @@ const addProduct = (req,res,next) =>{
             const product = new Product({title,price,description,categoryId,quantity,images,publisherId})
             const doc = await product.save()
             const document = await doc.populate('categoryId')
-            console.log(document)
             res.json(document)
             io.getIO().emit('addProduct',document)
             next()
@@ -113,9 +112,9 @@ const editProduct = (req,res,next)=>{
                     message: `product with id ${id} not found`
                 })
             }
-            res.json(updated)
-            io.getIO().emit('editProduct',updated)
-            next()
+            const doc = await updated.populate('categoryId')
+            res.json(doc)
+            io.getIO().emit('editProduct',doc)
         }catch(err){
             newImages.forEach(path=>deleteImage(path))
             if(err.errors){
