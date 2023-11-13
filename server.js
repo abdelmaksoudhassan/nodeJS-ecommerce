@@ -17,7 +17,7 @@ const app = express()
 const server = http.createServer(app)
 const io = require('./socket-io/socket').init(server,{
     cors: {
-      origin: ['https://ecommerce-admin-panel.onrender.com','http://localhost:5173'],
+      origin: ['https://ecommerce-admin-panel.onrender.com','https://ecommerce-client-8tst.onrender.com'],
       methods: ["GET", "POST", "PATCH", "DELETE"],
       credentials: true
     }
@@ -26,7 +26,7 @@ const io = require('./socket-io/socket').init(server,{
 const port = process.env.PORT || 3000
 
 app.use(cors({
-        origin: ['https://ecommerce-admin-panel.onrender.com','http://localhost:5173'],
+        origin: ['https://ecommerce-admin-panel.onrender.com','https://ecommerce-client-8tst.onrender.com'],
         methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
         credentials: true,
         allowedHeaders: ['Content-Type, Authorization, User-Token, Token']
