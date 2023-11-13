@@ -17,7 +17,7 @@ const app = express()
 const server = http.createServer(app)
 const io = require('./socket-io/socket').init(server,{
     cors: {
-      origin: ['http://localhost:5173','http://localhost:5174'],
+      origin: ['https://ecommerce-admin-panel.onrender.com','http://localhost:5173'],
       methods: ["GET", "POST", "PATCH", "DELETE"],
       credentials: true
     }
@@ -25,15 +25,8 @@ const io = require('./socket-io/socket').init(server,{
 
 const port = process.env.PORT || 3000
 
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-//     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, User-Token, Token');
-//     res.setHeader('Access-Control-Allow-Credentials', true);
-//     next();
-// });
 app.use(cors({
-        origin: ['http://localhost:5173','http://localhost:5174'],
+        origin: ['https://ecommerce-admin-panel.onrender.com','http://localhost:5173'],
         methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
         credentials: true,
         allowedHeaders: ['Content-Type, Authorization, User-Token, Token']
