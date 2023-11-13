@@ -17,7 +17,7 @@ const app = express()
 const server = http.createServer(app)
 const io = require('./socket-io/socket').init(server,{
     cors: {
-      origin: ['https://ecommerce-admin-panel.onrender.com','https://symphonious-treacle-8b9cea.netlify.app','http://localhost:5173','http://localhost:5174'],
+      origin: ['https://snazzy-kashata-b92b25.netlify.app','https://symphonious-treacle-8b9cea.netlify.app','http://localhost:5173','http://localhost:5174'],
       methods: ["GET", "POST", "PATCH", "DELETE"],
       credentials: true
     }
@@ -26,7 +26,7 @@ const io = require('./socket-io/socket').init(server,{
 const port = process.env.PORT || 3000
 
 app.use(cors({
-        origin: ['https://ecommerce-admin-panel.onrender.com','https://symphonious-treacle-8b9cea.netlify.app','http://localhost:5173','http://localhost:5174'],
+        origin: ['https://snazzy-kashata-b92b25.netlify.app','https://symphonious-treacle-8b9cea.netlify.app','http://localhost:5173','http://localhost:5174'],
         methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
         credentials: true,
         allowedHeaders: ['Content-Type, Authorization, User-Token, Token']
